@@ -1,0 +1,62 @@
+
+body{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contentWrapper{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: solid;
+    width: 100vh;
+    height: 100vh;
+    margin: 0px;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.accountDiv{
+    border: solid;
+    display: inline-block;
+
+}
+nav{
+    display: flex;
+    align-self: center;
+    width: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.form-div{
+    display: flex;
+    flex-direction: column;
+    border: solid;
+    width: 100vh;
+    margin-bottom: 15px;
+}
+.updateDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100vh;
+
+}
+.depositDiv{
+margin-right: 20px;
+}
+.withdrawDiv{
+    margin-right: 20px;
+}
+p{
+    margin: 3px;
+    border: solid;
+
+}
