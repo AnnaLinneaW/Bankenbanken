@@ -48,8 +48,10 @@ const allAccounts = async () => {
     <div class="accountDiv">
     <button id="deleteBtn" data-id="${post._id}" class="deleteBtn">Radera ditt konto</button>
     <h3>${post.title}</h3>
-    <p>Kontonummer: ${accountId}</p>
-    <p>Saldo: ${post.saldo} SEK</p>
+    <h4>Kontonummer:</h4>
+    <p> ${accountId}</p>
+    <h4>Saldo:</h4>
+    <p> ${post.saldo} SEK</p>
     <br>
     <div id="updateDiv${accountId}" class="updateDiv">
       <br>
