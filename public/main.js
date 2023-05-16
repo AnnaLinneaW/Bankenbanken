@@ -33,7 +33,7 @@ loginForm.addEventListener("submit", async (e) => {
   console.log(data);
 });
 
-// Kollar om man är inloggad
+// Kollar om man är inloggad   LÖS DENNA!!!!
 const loggedIn = async () => {
   const result = await fetch("/api/loggedin");
   const user = await result.json();
@@ -42,6 +42,7 @@ const loggedIn = async () => {
     registerH1.innerHTML = "Welcome " + user.user;
     logoutForm.classList.remove("hidden");
     registerForm.classList.add("hidden");
+    hiddenDiv.classList.remove("hidden");
   } else {
     logoutForm.classList.add("hidden");
     registerForm.classList.remove("hidden");
