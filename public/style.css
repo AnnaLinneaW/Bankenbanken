@@ -7,6 +7,9 @@ body{
     align-items: center;
     font-family: "bodini 72 oldstyle";
 }
+.hidden{
+    display: none;
+}
 
 .contentWrapper{
     display: flex;

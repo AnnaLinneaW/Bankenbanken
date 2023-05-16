@@ -6,13 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="main.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>BANKEN</title>
 </head>
 <body>
 <nav>
     <h1>Banken Bankensson</h1>
 </nav>
+<div class="loginDiv">
+    <h1 id="registerH1">Register</h1>
+    <form action="" id="login" class="">
+        <input id="loginName" type="text" name="loginName">
+        <br>
+        <input id="loginPassword" type="text" name="loginPassword">
+        <br>
+        <button>Login!</button>
+    </form>
 
+
+    <form action="" id="register" class="">
+        <input id="registerName" type="text" name="registerName">
+        <br>
+        <input id="registerPassword" type="text" name="registerPassword">
+        <br>
+        <button>Register!</button>
+    </form>
+
+    <form action="" id="logout" class="hidden">
+        <button>Logout!</button>
+    </form>
+</div>
+<div class="hidden" id="hiddenDiv">
 <div class="contentWrapper">
     <div class="form-div">
         <h3>Skapa konto</h3>
@@ -29,6 +52,7 @@
 
     <div id="allContentDiv" class="allContentDiv">
     </div>
+</div>
 </div>
 
 </body>

@@ -1,5 +1,102 @@
 const postBtn = document.querySelector("#postBtn");
 const allContentDiv = document.querySelector("#allContentDiv");
+const loginForm = document.querySelector("#login");
+const loginName = document.querySelector("#loginName");
+const loginPassword = document.querySelector("#loginPassword");
+const registerH1 = document.querySelector("#registerH1");
+const registerForm = document.querySelector("#register");
+const registerName = document.querySelector("#registerName");
+const registerPassword = document.querySelector("#registerPassword");
+const hiddenDiv = document.querySelector("#hiddenDiv");
+
+// Logga in
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const result = await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: loginName.value,
+      password: loginPassword.value,
+    }),
+  });
+  if (result.status === 200) {
+    loginForm.classList.add("hidden");
+    registerH1.innerHTML = "Welcome " + loginName.value;
+    registerForm.classList.add("hidden");
+    hiddenDiv.classList.remove("hidden");
+  }
+  loggedIn();
+  const data = await result.json();
+  console.log(data);
+});
+
+// Kollar om man är inloggad
+const loggedIn = async () => {
+  const result = await fetch("/api/loggedin");
+  const user = await result.json();
+  if (user.user) {
+    loginForm.classList.add("hidden");
+    registerH1.innerHTML = "Welcome " + user.user;
+    logoutForm.classList.remove("hidden");
+    registerForm.classList.add("hidden");
+  } else {
+    logoutForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+    loginForm.classList.remove("hidden");
+  }
+};
+
+// Registrera ny användare
+registerForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const result = await fetch("/api/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: registerName.value,
+      password: registerPassword.value,
+    }),
+  });
+  if (result.status === 200) {
+    registerForm.classList.add("hidden");
+    loginForm.classList.add("hidden");
+    logoutForm.classList.remove("hidden");
+    registerH1.innerHTML = "Welcome " + registerName.value;
+    hiddenDiv.classList.remove("hidden");
+  }
+  const data = await result.json();
+  console.log(data);
+});
+
+// Logga ut
+const logoutForm = document.querySelector("#logout");
+logoutForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const result = await fetch("/api/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (result.status === 200) {
+    logoutForm.classList.add("hidden");
+    registerH1.innerHTML = "You are logged out";
+    loginForm.classList.remove("hidden");
+    registerForm.classList.remove("hidden");
+    hiddenDiv.classList.add("hidden");
+  }
+  const data = await result.json();
+  console.log(data);
+});
+
+//////////////////////////////////////////////
+
+// HÄMTA ALLA KONTON
 
 const newAccount = async () => {
   let title = document.querySelector("#title").value;
