@@ -10,9 +10,7 @@ const registerName = document.querySelector("#registerName");
 const registerPassword = document.querySelector("#registerPassword");
 const hiddenDiv = document.querySelector("#hiddenDiv");
 
-
-
-// Kollar om man är inloggad  
+// Kollar om man är inloggad
 const loggedIn = async () => {
   const result = await fetch("/api/loggedin");
   const user = await result.json();
@@ -28,7 +26,6 @@ const loggedIn = async () => {
   }
 };
 loggedIn();
-
 
 // Logga in
 loginForm.addEventListener("submit", async (e) => {
@@ -47,13 +44,13 @@ loginForm.addEventListener("submit", async (e) => {
     logInDiv.classList.add("hidden");
     registerH1.innerHTML = "Welcome " + loginName.value;
     hiddenDiv.classList.remove("hidden");
+  } else {
+    alert("Fel användarnamn eller lösenord");
   }
-  else { alert("Fel användarnamn eller lösenord") }
   loggedIn();
   const data = await result.json();
   console.log(data);
 });
-
 
 // Registrera ny användare
 registerForm.addEventListener("submit", async (e) => {
@@ -173,7 +170,6 @@ const allAccounts = async () => {
     </div>
     `;
   });
-  
 
   let deleteBtn = document.querySelectorAll("#deleteBtn");
   deleteBtn.forEach((btn) => {
@@ -203,7 +199,7 @@ const allAccounts = async () => {
 const depositSaldo = async (id) => {
   let saldoInput = document.querySelector(`#depositSaldo${id}`);
   let saldo = saldoInput.value;
-  
+
   const getSaldos = await fetch(`/account/${id}`);
   const oldSaldo = await getSaldos.json();
   console.log(oldSaldo.saldo);

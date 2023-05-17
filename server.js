@@ -14,7 +14,6 @@ const users = registerdUsers.collection("user");
 const saltRounds = 10;
 const FIVE_MINUTES = 1000 * 60 * 5;
 
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
@@ -84,7 +83,6 @@ app.put("/accounts/:id", async (req, res) => {
   }
 });
 
-
 app.put("/account/:id/saldo", async (req, res) => {
   try {
     const updateSaldo = await accounts.updateOne(
@@ -152,7 +150,6 @@ app.post("/api/login", async (req, res) => {
       }
     });
   }
- 
 });
 
 app.get("/api/loggedin", (req, res) => {
