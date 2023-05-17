@@ -1,59 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="main.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <title>BANKEN</title>
-</head>
-<body>
-<nav>
-    <h1>Banken Bankensson</h1>
-</nav>
-<div class="loginDiv">
-    <h1 id="registerH1">Register</h1>
-    <form action="" id="login" class="">
-        <input id="loginName" type="text" name="loginName">
-        <br>
-        <input id="loginPassword" type="text" name="loginPassword">
-        <br>
-        <button>Login!</button>
-    </form>
+  </head>
+  <body>
+    <nav>
+      <h1>Banken Bankensson</h1>
+      <form action="" id="logout" class="hidden">
+        <button>Logga ut</button>
+      </form>
+    </nav>
+    <h2 id="registerH1">Vänligen logga in eller registrera dig</h2>
+    <div class="" id="loginDiv">
+      <form action="" id="login" class="login-form">
+        <h2 id="">Logga in</h2>
+        <input
+          id="loginName"
+          type="text"
+          name="loginName"
+          placeholder="Användarnamn"
+        />
+        <br />
+        <input
+          id="loginPassword"
+          type="password"
+          name="loginPassword"
+          placeholder="Lösenord"
+        />
+        <br />
+        <button>Logga in</button>
+      </form>
 
+      <form action="" id="register" class="register-from">
+        <h2 id="registerH2">Bli kund</h2>
+        <input
+          id="registerName"
+          type="text"
+          name="registerName"
+          placeholder="Användarnamn"
+        />
+        <br />
+        <input
+          id="registerPassword"
+          type="password"
+          name="registerPassword"
+          placeholder="Lösenord"
+        />
+        <br />
+        <button>Registrera</button>
+      </form>
+    </div>
 
-    <form action="" id="register" class="">
-        <input id="registerName" type="text" name="registerName">
-        <br>
-        <input id="registerPassword" type="text" name="registerPassword">
-        <br>
-        <button>Register!</button>
-    </form>
-
-    <form action="" id="logout" class="hidden">
-        <button>Logout!</button>
-    </form>
-</div>
-<div class="hidden" id="hiddenDiv">
-<div class="contentWrapper">
-    <div class="form-div">
-        <h3>Skapa konto</h3>
-        <form action="" class="form">
+    <div class="hidden" id="hiddenDiv">
+      <div class="contentWrapper">
+        <div class="form-div">
+          <h3>Skapa konto</h3>
+          <form action="" class="form">
             <label for="title">Kontonamn</label>
-            <input type="text" name="title" id="title">
-            <br>
-            <label for="saldo">Saldo</label>
-            <input type="number" name="saldo" id="saldo">
-            <br>
+            <input type="text" name="title" id="title" />
+            <br />
+            <label for="saldo">Belopp att sätta in</label>
+            <input type="number" name="saldo" id="saldo" />
+            <br />
             <button type="submit" id="postBtn" class="postBtn">Skapa</button>
-        </form>
-    </div>
+          </form>
+        </div>
 
-    <div id="allContentDiv" class="allContentDiv">
+        <div id="allContentDiv" class="allContentDiv"></div>
+      </div>
     </div>
-</div>
-</div>
-
-</body>
+  </body>
 </html>

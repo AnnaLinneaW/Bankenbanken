@@ -2,12 +2,33 @@ const postBtn = document.querySelector("#postBtn");
 const allContentDiv = document.querySelector("#allContentDiv");
 const loginForm = document.querySelector("#login");
 const loginName = document.querySelector("#loginName");
+const logInDiv = document.querySelector("#loginDiv");
 const loginPassword = document.querySelector("#loginPassword");
 const registerH1 = document.querySelector("#registerH1");
 const registerForm = document.querySelector("#register");
 const registerName = document.querySelector("#registerName");
 const registerPassword = document.querySelector("#registerPassword");
 const hiddenDiv = document.querySelector("#hiddenDiv");
+
+
+
+// Kollar om man är inloggad  
+const loggedIn = async () => {
+  const result = await fetch("/api/loggedin");
+  const user = await result.json();
+  if (user.user) {
+    logInDiv.classList.add("hidden");
+    registerH1.innerHTML = "Välkommen " + user.user;
+    logoutForm.classList.remove("hidden");
+    hiddenDiv.classList.remove("hidden");
+  } else {
+    logoutForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+    loginForm.classList.remove("hidden");
+  }
+};
+loggedIn();
+
 
 // Logga in
 loginForm.addEventListener("submit", async (e) => {
@@ -23,36 +44,28 @@ loginForm.addEventListener("submit", async (e) => {
     }),
   });
   if (result.status === 200) {
-    loginForm.classList.add("hidden");
+    logInDiv.classList.add("hidden");
     registerH1.innerHTML = "Welcome " + loginName.value;
-    registerForm.classList.add("hidden");
     hiddenDiv.classList.remove("hidden");
   }
+  else { alert("Fel användarnamn eller lösenord") }
   loggedIn();
   const data = await result.json();
   console.log(data);
 });
 
-// Kollar om man är inloggad   LÖS DENNA!!!!
-const loggedIn = async () => {
-  const result = await fetch("/api/loggedin");
-  const user = await result.json();
-  if (user.user) {
-    loginForm.classList.add("hidden");
-    registerH1.innerHTML = "Welcome " + user.user;
-    logoutForm.classList.remove("hidden");
-    registerForm.classList.add("hidden");
-    hiddenDiv.classList.remove("hidden");
-  } else {
-    logoutForm.classList.add("hidden");
-    registerForm.classList.remove("hidden");
-    loginForm.classList.remove("hidden");
-  }
-};
 
 // Registrera ny användare
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  const getOldUser = await fetch("/api/users");
+  const oldUser = await getOldUser.json();
+  const oldUserArray = oldUser.map((user) => user.user);
+  console.log(getOldUser);
+  if (oldUserArray.includes(registerName.value)) {
+    alert("Användarnamnet är upptaget");
+    return;
+  }
   const result = await fetch("/api/register", {
     method: "POST",
     headers: {
@@ -65,10 +78,7 @@ registerForm.addEventListener("submit", async (e) => {
   });
   if (result.status === 200) {
     registerForm.classList.add("hidden");
-    loginForm.classList.add("hidden");
-    logoutForm.classList.remove("hidden");
-    registerH1.innerHTML = "Welcome " + registerName.value;
-    hiddenDiv.classList.remove("hidden");
+    registerH1.innerHTML = "Vänligen logga in " + registerName.value;
   }
   const data = await result.json();
   console.log(data);
@@ -87,8 +97,7 @@ logoutForm.addEventListener("submit", async (e) => {
   if (result.status === 200) {
     logoutForm.classList.add("hidden");
     registerH1.innerHTML = "You are logged out";
-    loginForm.classList.remove("hidden");
-    registerForm.classList.remove("hidden");
+    logInDiv.classList.remove("hidden");
     hiddenDiv.classList.add("hidden");
   }
   const data = await result.json();
@@ -138,7 +147,6 @@ const deleteAccount = async (id) => {
 const allAccounts = async () => {
   let response = await fetch("http://localhost:3003/accounts");
   let data = await response.json();
-  console.log(data);
   allContentDiv.innerHTML = "";
   data.forEach((post) => {
     const accountId = post._id;
@@ -166,15 +174,6 @@ const allAccounts = async () => {
     `;
   });
   
-  // <button id="editBtn" data-id="${post._id}" class="editBtn">Hantera dina pengar</button>
-  // let editBtn = document.querySelectorAll(`#editBtn`);
-  // editBtn.forEach((btn) =>
-  //   btn.addEventListener("click", () => {
-  //     const accountId = btn.dataset.id;
-  //     const updateDiv = document.querySelector(`#updateDiv${accountId}`);
-  //     updateDiv.classList.toggle("hidden");
-  //   })
-  // );
 
   let deleteBtn = document.querySelectorAll("#deleteBtn");
   deleteBtn.forEach((btn) => {

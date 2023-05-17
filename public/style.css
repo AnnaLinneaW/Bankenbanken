@@ -21,9 +21,6 @@ body{
     flex-wrap: nowrap;
     flex-direction: column;
 }
-.allContentDiv{
-border: rgb(139, 11, 11);
-}
 
 .accountDiv{
     border: solid;
@@ -42,10 +39,24 @@ input[type="number"]::-webkit-outer-spin-button {
 nav{
     display: flex;
     align-self: center;
-    width: 100vh;
+    justify-content: space-around;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
     font-size: xx-large;
+    border-bottom: solid;
+    margin-bottom: 20px;
+}
+input{
+    margin: 5px;
+    height: 30px;
+}
+button{
+    margin: 5px;
+    height: 30px;
+    background-color: #f5ebe0;
+    border: thin solid;
+    border-radius: 4px;
 }
 .form{
     display: flex;
@@ -92,5 +103,48 @@ h4{
     align-self: flex-end;
 }
 .deleteBtn:hover{
-    background-color: rgb(234, 39, 68);
+    background-color: #e76f51;
+}
+.loginDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login-form{
+    border: thin solid;
+    padding: 30px;
+    margin: 20px;
+    width: 300px;
+}
+
+.register-from{
+    border: thin solid;
+    padding: 30px;
+    margin: 20px;
+    width: 300px;
+}
+
+.login-form input{
+    margin: 10px;
+    width: 200px;
+    height: 30px;
+}
+
+.register-from input{
+    margin: 10px;
+    width: 200px;
+    height: 30px;
+}
+
+.login-form button{
+    margin: 10px;
+    width: 100px;
+    height: 30px;
+}
+
+.register-from button{
+    margin: 10px;
+    width: 100px;
+    height: 30px;
 }

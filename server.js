@@ -2,18 +2,18 @@ import express from "express";
 import { MongoClient, ObjectId } from "mongodb";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import bcrypt from "bcrypt";
 
 const app = express();
 const port = 3003;
 const client = new MongoClient("mongodb://localhost:27017");
 const db = client.db("bank");
 const accounts = db.collection("account");
-
 const registerdUsers = client.db("registerdusers");
 const users = registerdUsers.collection("user");
-const loginProject = client.db("loginproject");
-const loginUser = loginProject.collection("users");
+const saltRounds = 10;
 const FIVE_MINUTES = 1000 * 60 * 5;
+
 
 app.use(cookieParser());
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(
     },
   })
 );
-// skapa en ny accounts
+// skapa ett nytt account
 app.post("/newaccount", async (req, res) => {
   const newpost = await accounts.insertOne({
     title: req.body.title,
@@ -47,7 +47,7 @@ app.get("/accounts", async (req, res) => {
   console.log(posts);
 });
 
-// hämtar ett accounts med ett id
+// hämtar ett account med ett id
 app.get("/account/:id", async (req, res) => {
   const post = await accounts.findOne({
     _id: new ObjectId(req.params.id),
@@ -83,6 +83,7 @@ app.put("/accounts/:id", async (req, res) => {
     });
   }
 });
+
 
 app.put("/account/:id/saldo", async (req, res) => {
   try {
@@ -130,20 +131,28 @@ app.delete("/account/:id", async (req, res) => {
   }
 });
 
-/////////////////////////////
+//////////////////////////////
 
 // LOGGA IN
 app.post("/api/login", async (req, res) => {
   const user = req.body.user;
   const password = req.body.password;
-  if (user) {
-    req.session.user = user;
-    res.json({
-      user: user,
+  const registerdUser = await users.findOne({ user: user });
+
+  if (registerdUser) {
+    bcrypt.compare(password, registerdUser.password, (err, result) => {
+      if (result) {
+        req.session.user = user;
+        res.json({
+          loggedin: true,
+          user: user,
+        });
+      } else {
+        res.status(401).json({ error: "Unauthorized" });
+      }
     });
-  } else {
-    res.status(401).send({ message: "Wrong username or password" });
   }
+ 
 });
 
 app.get("/api/loggedin", (req, res) => {
@@ -167,17 +176,25 @@ app.post("/api/logout", (req, res) => {
 app.post("/api/register", async (req, res) => {
   const user = req.body.user;
   const password = req.body.password;
-  const result = await loginUser.insertOne({
-    user: user,
-    password: password,
+
+  bcrypt.hash(password, saltRounds, async (err, hash) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "An error occurred during password hashing." });
+      return;
+    }
+    const result = await users.insertOne({
+      user: user,
+      password: hash,
+    });
+    res.json(result);
   });
-  res.json(result);
 });
 
-app.get("/api/cookie", (req, res) => {
-  console.log(req.cookies);
-  res.send(req.session);
-  res.send("Hej");
+app.get("/api/users", async (req, res) => {
+  const result = await users.find({}).toArray();
+  res.json(result);
 });
 
 app.listen(port, () => {
